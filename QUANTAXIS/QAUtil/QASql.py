@@ -31,7 +31,7 @@ import asyncio
 def QA_util_sql_mongo_setting(uri='mongodb://localhost:27017/quantaxis'):
     # 采用@几何的建议,使用uri代替ip,port的连接方式
     # 这样可以对mongodb进行加密:
-    # uri=mongodb://user:passwor@ip:port
+    uri='mongodb://192.168.0.199:27017'
     client = pymongo.MongoClient(uri)
     return client
 
