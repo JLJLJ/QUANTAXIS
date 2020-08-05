@@ -44,10 +44,7 @@ Volume HMA(完成)
 """
 
 # 定义MACD函数
-def TA_MACD(prices:np.ndarray, 
-            fastperiod:int=12, 
-            slowperiod:int=26, 
-            signalperiod:int=9) -> np.ndarray:
+def TA_MACD(prices, fastperiod=12, slowperiod=26, signalperiod=9):
     '''
     参数设置:
         fastperiod = 12
@@ -66,8 +63,7 @@ def TA_MACD(prices:np.ndarray,
 
 
 # 定义RSI函数
-def TA_RSI(prices:np.ndarray, 
-           timeperiod:int=12) -> np.ndarray:
+def TA_RSI(prices, timeperiod=12):
     '''
     参数设置:
         timeperiod = 12
@@ -80,11 +76,7 @@ def TA_RSI(prices:np.ndarray,
 
 
 # 定义RSI函数
-def TA_BBANDS(prices:np.ndarray, 
-              timeperiod:int=5, 
-              nbdevup:int=2, 
-              nbdevdn:int=2, 
-              matype:int=0) -> np.ndarray:
+def TA_BBANDS(prices, timeperiod=5, nbdevup=2, nbdevdn=2, matype=0):
     '''
     参数设置:
         timeperiod = 5
@@ -93,23 +85,13 @@ def TA_BBANDS(prices:np.ndarray,
 
     返回: up, middle, low
     '''
-    up, middle, low = talib.BBANDS(prices, 
-                                   timeperiod, 
-                                   nbdevup, 
-                                   nbdevdn, 
-                                   matype)
+    up, middle, low = talib.BBANDS(prices, timeperiod, nbdevup, nbdevdn, matype)
     ch = (up - low) / middle
     delta = np.r_[np.nan, np.diff(ch)]
     return np.c_[up, middle, low, ch, delta]
 
 
-def TA_KDJ(high:np.ndarray, 
-           low:np.ndarray, 
-           close:np.ndarray, 
-           fastk_period:int=9, 
-           slowk_matype:int=0, 
-           slowk_period:int=3, 
-           slowd_period:int=3) -> np.ndarray:
+def TA_KDJ(hight, low, close, fastk_period=9, slowk_matype=0, slowk_period=3, slowd_period=3):
     '''
     参数设置:
         fastk_period = 9
@@ -119,19 +101,13 @@ def TA_KDJ(high:np.ndarray,
 
     返回: K, D, J
     '''
-    K, D = talib.STOCH(high, 
-                       low, 
-                       close, 
-                       fastk_period=fastk_period, 
-                       slowk_matype=slowk_matype, 
-                       slowk_period=slowk_period, 
-                       slowd_period=slowd_period)
+    K, D = talib.STOCH(hight, low, close, fastk_period=fastk_period, slowk_matype=slowk_matype, slowk_period=slowk_period, slowd_period=slowd_period)
     J = 3 * K - 2 * D
     delta = np.r_[np.nan, np.diff(J)]
     return np.c_[K, D, J, delta]
 
 
-def TA_ADX(high, low, close, timeperiod=14) -> np.ndarray:
+def TA_ADX(high, low, close, timeperiod=14):
     """
     ADX - Average Directional Movement Index
     """
@@ -139,7 +115,7 @@ def TA_ADX(high, low, close, timeperiod=14) -> np.ndarray:
     return np.c_[real]
 
 
-def TA_ADXR(high, low, close, timeperiod=14) -> np.ndarray:
+def TA_ADXR(high, low, close, timeperiod=14):
     """
     名称：平均趋向指数的趋向指数
     简介：使用ADXR指标，指标判断ADX趋势。
@@ -149,19 +125,13 @@ def TA_ADXR(high, low, close, timeperiod=14) -> np.ndarray:
     return np.c_[real]
 
 
-def TA_CCI(high:np.ndarray, 
-           low:np.ndarray, 
-           close:np.ndarray, 
-           timeperiod:int=14) -> np.ndarray:
+def TA_CCI(high, low, close, timeperiod=14):
     """
     名称：平均趋向指数的趋向指数
     简介：使用CCI指标，指标判断CCI趋势。
     CCI - Commodity Channel Index
     """
-    real = talib.CCI(high, 
-                     low, 
-                     close, 
-                     timeperiod=timeperiod)
+    real = talib.CCI(high, low, close, timeperiod=timeperiod)
     delta = np.r_[np.nan, np.diff(real)]
     return np.c_[real, delta]
 
